@@ -33,14 +33,6 @@ public class PersonalInfoController {
 		return ResponseEntity.ok().body(personalInfoDto);
 	}
 
-	@PostMapping("/savePersonalInfo")
-	public ResponseEntity<String> savePersonalInfoTemplate(@RequestBody PersonalInfoDto personalInfoDto) {
-
-		String response = personalInfoService.savePersonalInfoDto(personalInfoDto);
-
-		return ResponseEntity.ok().body(response);
-	}
-
 	@PostMapping("/updatePersonalInfo")
 	public ResponseEntity<String> updatePersonalInfoTemplate(@RequestBody PersonalInfoDto personalInfoDto) {
 
