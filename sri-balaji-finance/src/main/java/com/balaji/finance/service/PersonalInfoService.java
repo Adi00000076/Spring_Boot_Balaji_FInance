@@ -175,6 +175,7 @@ public class PersonalInfoService {
 		allPersonalInfoList.stream().forEach(p -> {
 
 			PersonalInfoDto personalInfoDto = new PersonalInfoDto();
+			personalInfoDto.setId(p.getId());
 			personalInfoDto.setFirstname(p.getFirstname());
 			personalInfoDto.setLastname(p.getLastname());
 			personalInfoDto.setGender(p.getGender());
