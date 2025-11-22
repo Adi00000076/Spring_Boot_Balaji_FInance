@@ -4,6 +4,7 @@ public class AddUserReqPojo {
 
 	private String name;
 	private String password;
+	private String role;
 
 	public String getName() {
 		return name;
@@ -21,4 +22,5 @@ public class AddUserReqPojo {
 		this.password = password;
 	}
 
+	
 }

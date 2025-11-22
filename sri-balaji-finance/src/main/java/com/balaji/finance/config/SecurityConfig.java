@@ -32,12 +32,20 @@ public class SecurityConfig {
 		http
 				// REST API → disable CSRF
 				.csrf(csrf -> csrf.disable())
+				
+				// Allow H2 console frames
+		        .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
 				// No session (stateless)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
 				// Authorization rules
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**" ,"/addUser").permitAll() // login, register
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**" ,"/addUser", "/v2/api-docs",
+		                "/v3/api-docs/**",
+		                "/swagger-resources/**",
+		                "/swagger-ui/**",
+		                "/swagger-ui.html",
+		                "/webjars/**").permitAll() // login, register
 						.anyRequest().authenticated() // secure all other APIs
 				)
 
