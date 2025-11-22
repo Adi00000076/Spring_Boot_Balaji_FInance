@@ -37,7 +37,7 @@ public class SecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
 				// Authorization rules
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/balaji-finance/auth/**" ,"/balaji-finance/addUser").permitAll() // login, register
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**" ,"/addUser").permitAll() // login, register
 						.anyRequest().authenticated() // secure all other APIs
 				)
 
