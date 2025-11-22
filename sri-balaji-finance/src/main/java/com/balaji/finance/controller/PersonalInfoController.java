@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,6 @@ import com.balaji.finance.service.PersonalInfoService;
 
 @RestController
 @RequestMapping("/PersonalInfo")
-@CrossOrigin(origins = "*")  // allow all origins
 public class PersonalInfoController {
 
 	@Autowired
@@ -33,8 +31,9 @@ public class PersonalInfoController {
 		return ResponseEntity.ok().body(personalInfoDto);
 	}
 
-	@PostMapping("/updatePersonalInfo")
-	public ResponseEntity<String> updatePersonalInfoTemplate(@RequestBody PersonalInfoDto personalInfoDto) {
+	@PostMapping("/updatePersonalInfo/{personType}")
+	public ResponseEntity<String> updatePersonalInfoTemplate(@RequestBody PersonalInfoDto personalInfoDto,
+			@PathVariable("personType") String personType) {
 
 		String response = personalInfoService.updatePersonalInfoDto(personalInfoDto);
 

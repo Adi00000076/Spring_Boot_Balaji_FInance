@@ -24,29 +24,31 @@ public class PersonalInfoService {
 	public String generateId(String type) {
 
 		String prefix;
-
+		long seq = 0;
 		switch (type) {
 		case "PARTNER":
 			prefix = "P";
+			seq = personalSequenceService.getNextPartnerSeqId();
 			break;
 
 		case "CUSTOMER":
 			prefix = "C";
+			seq = personalSequenceService.getNextCustomerSeqId();
 			break;
 
 		case "EMPLOYEE":
 			prefix = "E";
+			seq = personalSequenceService.getNextEmployeeSeqId();
 			break;
 
 		case "VENDOR":
 			prefix = "V";
+			seq = personalSequenceService.getNextVendorSeqId();
 			break;
 
 		default:
 			throw new IllegalArgumentException("Unknown type: " + type);
 		}
-
-		long seq = personalSequenceService.getNextId();
 
 		return prefix + "" + seq;
 	}
@@ -54,47 +56,53 @@ public class PersonalInfoService {
 	// create
 	public PersonalInfoDto createPersonalInfoDto(String type) {
 
-		PersonalInfo personalInfo = new PersonalInfo();
-		personalInfo.setId(generateId(type));
-
-		personalInfoRepository.save(personalInfo);
-
 		PersonalInfoDto personalInfoDto = new PersonalInfoDto();
-		personalInfoDto.setId(personalInfo.getId());
 
 		return personalInfoDto;
 
 	}
 
 	// create
-	public String savePersonalInfoDto(PersonalInfoDto personalInfoDto) {
+	public String savePersonalInfoDto(PersonalInfoDto personalInfoDto,String type) {
 
 		PersonalInfo personalInfo = new PersonalInfo();
+		personalInfo.setId(generateId(type));
+		
+		
 		personalInfo.setFirstname(personalInfoDto.getFirstname());
 		personalInfo.setLastname(personalInfoDto.getLastname());
 		personalInfo.setGender(personalInfoDto.getGender());
+		personalInfo.setAge(personalInfoDto.getAge());
+		
+		
 		personalInfo.setFathername(personalInfoDto.getFathername());
+		personalInfo.setSpouse(personalInfoDto.getSpouse());
+
+		personalInfo.setOccupation(personalInfoDto.getOccupation());
+		
+		
 		personalInfo.setAddress(personalInfoDto.getAddress());
 		personalInfo.setMobile(personalInfoDto.getMobile());
 		personalInfo.setPhone(personalInfoDto.getPhone());
-		personalInfo.setCategory(personalInfoDto.getCategory());
-		personalInfo.setReference(personalInfoDto.getReference());
-		personalInfo.setIdproof(personalInfoDto.getIdproof());
-		personalInfo.setDisable(personalInfoDto.getDisable());
-		personalInfo.setShares(personalInfoDto.getShares());
-		personalInfo.setLoanlimit(personalInfoDto.getLoanlimit());
-
 		personalInfo.setAddress2(personalInfoDto.getAddress2());
 		personalInfo.setMobile2(personalInfoDto.getMobile2());
 		personalInfo.setPhone2(personalInfoDto.getPhone2());
-		personalInfo.setOldid(personalInfoDto.getOldid());
-		personalInfo.setAge(personalInfoDto.getAge());
-		personalInfo.setOccupation(personalInfoDto.getOccupation());
-		personalInfo.setSpouse(personalInfoDto.getSpouse());
+		
+		
+		personalInfo.setReference(personalInfoDto.getReference());
+		personalInfo.setIdproof(personalInfoDto.getIdproof());
+		
+		personalInfo.setShares(personalInfoDto.getShares());
+		personalInfo.setLoanlimit(personalInfoDto.getLoanlimit());
 
 		personalInfo.setBussinessexemption(personalInfoDto.getBussinessexemption());
 		personalInfo.setIntroname(personalInfoDto.getIntroname());
 
+		personalInfo.setOldid(personalInfoDto.getOldid());
+		personalInfo.setCategory(personalInfoDto.getCategory());
+		personalInfo.setDisable(personalInfoDto.getDisable());
+		
+		
 		personalInfoRepository.save(personalInfo);
 
 		return "Sucessfully Saved ";
@@ -108,31 +116,42 @@ public class PersonalInfoService {
 		if (personalInfoInDb.isPresent()) {
 
 			PersonalInfo personalInfo = personalInfoInDb.get();
+			
 			personalInfo.setFirstname(personalInfoDto.getFirstname());
 			personalInfo.setLastname(personalInfoDto.getLastname());
 			personalInfo.setGender(personalInfoDto.getGender());
+			personalInfo.setAge(personalInfoDto.getAge());
+			
+			
 			personalInfo.setFathername(personalInfoDto.getFathername());
+			personalInfo.setSpouse(personalInfoDto.getSpouse());
+
+			personalInfo.setOccupation(personalInfoDto.getOccupation());
+			
+			
 			personalInfo.setAddress(personalInfoDto.getAddress());
 			personalInfo.setMobile(personalInfoDto.getMobile());
 			personalInfo.setPhone(personalInfoDto.getPhone());
-			personalInfo.setCategory(personalInfoDto.getCategory());
-			personalInfo.setReference(personalInfoDto.getReference());
-			personalInfo.setIdproof(personalInfoDto.getIdproof());
-			personalInfo.setDisable(personalInfoDto.getDisable());
-			personalInfo.setShares(personalInfoDto.getShares());
-			personalInfo.setLoanlimit(personalInfoDto.getLoanlimit());
-
 			personalInfo.setAddress2(personalInfoDto.getAddress2());
 			personalInfo.setMobile2(personalInfoDto.getMobile2());
 			personalInfo.setPhone2(personalInfoDto.getPhone2());
-			personalInfo.setOldid(personalInfoDto.getOldid());
-			personalInfo.setAge(personalInfoDto.getAge());
-			personalInfo.setOccupation(personalInfoDto.getOccupation());
-			personalInfo.setSpouse(personalInfoDto.getSpouse());
+			
+			
+			personalInfo.setReference(personalInfoDto.getReference());
+			personalInfo.setIdproof(personalInfoDto.getIdproof());
+			
+			personalInfo.setShares(personalInfoDto.getShares());
+			personalInfo.setLoanlimit(personalInfoDto.getLoanlimit());
 
 			personalInfo.setBussinessexemption(personalInfoDto.getBussinessexemption());
 			personalInfo.setIntroname(personalInfoDto.getIntroname());
 
+			personalInfo.setOldid(personalInfoDto.getOldid());
+			personalInfo.setCategory(personalInfoDto.getCategory());
+			personalInfo.setDisable(personalInfoDto.getDisable());
+			
+			
+			
 			personalInfoRepository.save(personalInfo);
 
 			return "Sucessfully Updated ";
@@ -153,7 +172,9 @@ public class PersonalInfoService {
 		if (personalInfoInDb.isPresent()) {
 
 			PersonalInfo personalInfo = personalInfoInDb.get();
-			personalInfoRepository.delete(personalInfo);
+			personalInfo.setDisable(personalInfoDto.getDisable());
+			
+			personalInfoRepository.save(personalInfo);
 
 			return "Sucessfully Deleted " + personalInfoDto.getFirstname();
 
@@ -176,31 +197,42 @@ public class PersonalInfoService {
 
 			PersonalInfoDto personalInfoDto = new PersonalInfoDto();
 			personalInfoDto.setId(p.getId());
+			
+			
 			personalInfoDto.setFirstname(p.getFirstname());
 			personalInfoDto.setLastname(p.getLastname());
 			personalInfoDto.setGender(p.getGender());
+			personalInfoDto.setAge(p.getAge());
+			
+			
 			personalInfoDto.setFathername(p.getFathername());
+			personalInfoDto.setSpouse(p.getSpouse());
+
+			personalInfoDto.setOccupation(p.getOccupation());
+			
+			
 			personalInfoDto.setAddress(p.getAddress());
 			personalInfoDto.setMobile(p.getMobile());
 			personalInfoDto.setPhone(p.getPhone());
-			personalInfoDto.setCategory(p.getCategory());
-			personalInfoDto.setReference(p.getReference());
-			personalInfoDto.setIdproof(p.getIdproof());
-			personalInfoDto.setDisable(p.getDisable());
-			personalInfoDto.setShares(p.getShares());
-			personalInfoDto.setLoanlimit(p.getLoanlimit());
-
 			personalInfoDto.setAddress2(p.getAddress2());
 			personalInfoDto.setMobile2(p.getMobile2());
 			personalInfoDto.setPhone2(p.getPhone2());
-			personalInfoDto.setOldid(p.getOldid());
-			personalInfoDto.setAge(p.getAge());
-			personalInfoDto.setOccupation(p.getOccupation());
-			personalInfoDto.setSpouse(p.getSpouse());
+			
+			
+			personalInfoDto.setReference(p.getReference());
+			personalInfoDto.setIdproof(p.getIdproof());
+			
+			personalInfoDto.setShares(p.getShares());
+			personalInfoDto.setLoanlimit(p.getLoanlimit());
 
 			personalInfoDto.setBussinessexemption(p.getBussinessexemption());
 			personalInfoDto.setIntroname(p.getIntroname());
 
+			personalInfoDto.setOldid(p.getOldid());
+			personalInfoDto.setCategory(p.getCategory());
+			personalInfoDto.setDisable(p.getDisable());
+			
+			
 			toBeReturnedDtoList.add(personalInfoDto);
 
 		});
@@ -208,7 +240,7 @@ public class PersonalInfoService {
 		return toBeReturnedDtoList;
 	}
 
-	// findBy
+	
 	// findAll
 	public PersonalInfoDto findById(String id) {
 
@@ -218,33 +250,47 @@ public class PersonalInfoService {
 
 			PersonalInfo personalInfoDbObject = personalInfo.get();
 
+
+
 			PersonalInfoDto personalInfoDto = new PersonalInfoDto();
+			personalInfoDto.setId(personalInfoDbObject.getId());
+			
+			
 			personalInfoDto.setFirstname(personalInfoDbObject.getFirstname());
 			personalInfoDto.setLastname(personalInfoDbObject.getLastname());
 			personalInfoDto.setGender(personalInfoDbObject.getGender());
+			personalInfoDto.setAge(personalInfoDbObject.getAge());
+			
+			
 			personalInfoDto.setFathername(personalInfoDbObject.getFathername());
+			personalInfoDto.setSpouse(personalInfoDbObject.getSpouse());
+
+			personalInfoDto.setOccupation(personalInfoDbObject.getOccupation());
+			
+			
 			personalInfoDto.setAddress(personalInfoDbObject.getAddress());
 			personalInfoDto.setMobile(personalInfoDbObject.getMobile());
 			personalInfoDto.setPhone(personalInfoDbObject.getPhone());
-			personalInfoDto.setCategory(personalInfoDbObject.getCategory());
-			personalInfoDto.setReference(personalInfoDbObject.getReference());
-			personalInfoDto.setIdproof(personalInfoDbObject.getIdproof());
-			personalInfoDto.setDisable(personalInfoDbObject.getDisable());
-			personalInfoDto.setShares(personalInfoDbObject.getShares());
-			personalInfoDto.setLoanlimit(personalInfoDbObject.getLoanlimit());
-
 			personalInfoDto.setAddress2(personalInfoDbObject.getAddress2());
 			personalInfoDto.setMobile2(personalInfoDbObject.getMobile2());
 			personalInfoDto.setPhone2(personalInfoDbObject.getPhone2());
-			personalInfoDto.setOldid(personalInfoDbObject.getOldid());
-			personalInfoDto.setAge(personalInfoDbObject.getAge());
-			personalInfoDto.setOccupation(personalInfoDbObject.getOccupation());
-			personalInfoDto.setSpouse(personalInfoDbObject.getSpouse());
+			
+			
+			personalInfoDto.setReference(personalInfoDbObject.getReference());
+			personalInfoDto.setIdproof(personalInfoDbObject.getIdproof());
+			
+			personalInfoDto.setShares(personalInfoDbObject.getShares());
+			personalInfoDto.setLoanlimit(personalInfoDbObject.getLoanlimit());
 
 			personalInfoDto.setBussinessexemption(personalInfoDbObject.getBussinessexemption());
 			personalInfoDto.setIntroname(personalInfoDbObject.getIntroname());
 
+			personalInfoDto.setOldid(personalInfoDbObject.getOldid());
+			personalInfoDto.setCategory(personalInfoDbObject.getCategory());
+			personalInfoDto.setDisable(personalInfoDbObject.getDisable());
+
 			return personalInfoDto;
+		
 		} else {
 
 			return null;

@@ -6,17 +6,12 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class Users {
 
-	
-	
 	@Id
 	private String name;
-
 	private String password;
-
 	private String role;
 
 	// Getters and Setters
-
 
 	public String getName() {
 		return name;
@@ -41,4 +36,5 @@ public class Users {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
 }
