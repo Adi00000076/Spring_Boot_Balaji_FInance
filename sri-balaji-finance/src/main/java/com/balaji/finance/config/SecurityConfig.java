@@ -1,6 +1,7 @@
 package com.balaji.finance.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,8 @@ public class SecurityConfig {
 	@Autowired
 	private JwtFilter jwtFilter;
 	
+	@Value("${app.cors.allowed-origin}")
+	private String allowedOrigins;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -34,7 +37,7 @@ public class SecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
 				// Authorization rules
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll() // login, register
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/balaji-finance/auth/**" ,"/balaji-finance/addUser").permitAll() // login, register
 						.anyRequest().authenticated() // secure all other APIs
 				)
 
@@ -43,6 +46,36 @@ public class SecurityConfig {
 
 		// Add JWT filter BEFORE UsernamePasswordAuthenticationFilter
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		
+		
+		/*
+		 http
+	        // Disable CSRF for H2 console
+	        .csrf(csrf -> csrf.disable())
+
+	        // Allow H2 console frames
+	        .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+
+	        // No sessions → JWT stateless
+	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+	        // Authorization rules
+	        .authorizeHttpRequests(auth -> auth
+	                .requestMatchers(
+	                        "/auth/**",
+	                        "/h2-console/**"
+	                        ,"/addUser"
+	                ).permitAll()
+	                .anyRequest().authenticated()
+	        )
+
+	        // Disable form login + basic auth
+	        .formLogin(form -> form.disable())
+	        .httpBasic(httpBasic -> httpBasic.disable());
+
+	    // Add JWT filter BEFORE UsernamePasswordAuthenticationFilter
+	    http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+*/
 
 		return http.build();
 	}
@@ -53,8 +86,12 @@ public class SecurityConfig {
 	    return new WebMvcConfigurer() {
 	        @Override
 	        public void addCorsMappings(CorsRegistry registry) {
+	        	
+	        	 String[] origins = allowedOrigins.split(",");
+
+	        	 
 	            registry.addMapping("/**")
-	                    .allowedOrigins("http://localhost:3000")
+	                    .allowedOrigins(origins)
 	                    .allowedMethods("GET","POST","PUT","DELETE")
 	                    .allowedHeaders("*")
 	                    .allowCredentials(true);

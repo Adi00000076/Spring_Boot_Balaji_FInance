@@ -27,28 +27,29 @@ public class LoginController {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	@Autowired
 	private JwtUtil jwtUtil;
 
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginReqPojo loginReqPojo) {
 
 		try {
-			Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-					loginReqPojo.getName(), passwordEncoder.encode(loginReqPojo.getPassword())));
+
+			Authentication auth = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(loginReqPojo.getName(), loginReqPojo.getPassword()));
 
 			String token = jwtUtil.generateToken(loginReqPojo.getName());
 
 			return ResponseEntity.ok(new LoginResponse("Login success", token));
 
 		} catch (BadCredentialsException e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(new ErrorResponse("Invalid username or password"));
 		} catch (UsernameNotFoundException e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("User does not exist"));
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(new ErrorResponse("Login failed due to server error"));
 		}

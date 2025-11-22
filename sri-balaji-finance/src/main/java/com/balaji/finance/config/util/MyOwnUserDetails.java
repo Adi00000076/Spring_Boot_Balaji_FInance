@@ -21,8 +21,9 @@ public class MyOwnUserDetails implements UserDetailsService {
 		// TODO Auto-generated method stub
 
 		Users user = userRepo.findByName(username);
+		String role = user.getRole() == null ? "USER" : user.getRole();
 
-		return User.builder().username(user.getName()).password(user.getPassword()).roles(user.getRole()).build();
+		return User.builder().username(user.getName()).password(user.getPassword()).roles(role).build();
 
 	}
 
