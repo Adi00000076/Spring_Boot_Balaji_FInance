@@ -165,22 +165,22 @@ public class PersonalInfoService {
 	}
 
 	// delete
-	public String deletePersonalInfoDto(PersonalInfoDto personalInfoDto) {
+	public String deletePersonalInfoDto(String id) {
 
-		Optional<PersonalInfo> personalInfoInDb = personalInfoRepository.findById(personalInfoDto.getId());
+		Optional<PersonalInfo> personalInfoInDb = personalInfoRepository.findById(id);
 
 		if (personalInfoInDb.isPresent()) {
 
 			PersonalInfo personalInfo = personalInfoInDb.get();
-			personalInfo.setDisable(personalInfoDto.getDisable());
-			
+			personalInfo.setDisable(true);
+
 			personalInfoRepository.save(personalInfo);
 
-			return "Sucessfully Deleted " + personalInfoDto.getFirstname();
+			return "Sucessfully Deleted " + personalInfo.getId();
 
 		} else {
 
-			return "Record Not Found " + personalInfoDto.getFirstname();
+			return "Record Not Found " + id;
 
 		}
 
@@ -189,7 +189,7 @@ public class PersonalInfoService {
 	// findAll
 	public List<PersonalInfoDto> findAll() {
 
-		List<PersonalInfo> allPersonalInfoList = personalInfoRepository.findAll();
+		List<PersonalInfo> allPersonalInfoList = personalInfoRepository.findAllActiveRecords(true);
 
 		List<PersonalInfoDto> toBeReturnedDtoList = new ArrayList<PersonalInfoDto>();
 

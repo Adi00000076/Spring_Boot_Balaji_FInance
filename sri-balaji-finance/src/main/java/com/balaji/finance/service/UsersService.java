@@ -1,9 +1,13 @@
 package com.balaji.finance.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.balaji.finance.entity.PersonalInfo;
 import com.balaji.finance.entity.Users;
 import com.balaji.finance.pojo.AddUserReqPojo;
 import com.balaji.finance.repo.UserRepo;
@@ -22,7 +26,7 @@ public class UsersService {
 		Users userByName = userRepo.findByName(addUserReqPojo.getName());
 
 		if (userByName == null) {
-			
+
 			System.out.println(addUserReqPojo.getName());
 			System.out.println(addUserReqPojo.getPassword());
 
@@ -37,6 +41,29 @@ public class UsersService {
 		} else {
 
 			return "UserName Alredy Exists";
+		}
+
+	}
+
+	public List<Users> findAll() {
+		userRepo.findAll();// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String deletePersonalInfoDto(Integer id) {
+
+		Optional<Users> users = userRepo.findById(id);
+
+		if (users.isPresent()) {
+
+			userRepo.delete(users.get());
+
+			return "Sucessfully Deleted " + users.get().getName();
+
+		} else {
+
+			return "Record Not Found ";
+
 		}
 
 	}

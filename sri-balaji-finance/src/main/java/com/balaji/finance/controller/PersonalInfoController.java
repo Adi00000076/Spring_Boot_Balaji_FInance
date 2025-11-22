@@ -40,10 +40,10 @@ public class PersonalInfoController {
 		return ResponseEntity.ok().body(response);
 	}
 
-	@DeleteMapping("/deletePersonalInfo")
-	public ResponseEntity<String> deletePersonalInfoTemplate(@RequestBody PersonalInfoDto personalInfoDto) {
+	@DeleteMapping("/deletePersonalInfo/{id}")
+	public ResponseEntity<String> deletePersonalInfoTemplate(@PathVariable("id") String id) {
 
-		String response = personalInfoService.deletePersonalInfoDto(personalInfoDto);
+		String response = personalInfoService.deletePersonalInfoDto(id);
 
 		return ResponseEntity.ok().body(response);
 	}
