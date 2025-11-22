@@ -102,7 +102,7 @@ public class SecurityConfig {
 	                    .allowedOrigins(origins)
 	                    .allowedMethods("GET","POST","PUT","DELETE")
 	                    .allowedHeaders("*")
-	                    .allowCredentials(true);
+	                    .allowCredentials(false);
 	        }
 	    };
 	}
