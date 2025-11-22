@@ -189,7 +189,7 @@ public class PersonalInfoService {
 	// findAll
 	public List<PersonalInfoDto> findAll() {
 
-		List<PersonalInfo> allPersonalInfoList = personalInfoRepository.findAllActiveRecords(true);
+		List<PersonalInfo> allPersonalInfoList = personalInfoRepository.findAllActiveRecords(false);
 
 		List<PersonalInfoDto> toBeReturnedDtoList = new ArrayList<PersonalInfoDto>();
 
