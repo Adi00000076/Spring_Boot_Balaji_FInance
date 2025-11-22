@@ -12,109 +12,76 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.balaji.finance.filter.JwtFilter;
 
 @Configuration
 public class SecurityConfig {
-	
-	@Autowired
-	private JwtFilter jwtFilter;
-	
-	@Value("${app.cors.allowed-origin}")
-	private String allowedOrigins;
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Autowired
+    private JwtFilter jwtFilter;
 
-		http
-				// REST API → disable CSRF
-				.csrf(csrf -> csrf.disable())
-				
-				// Allow H2 console frames
-		        .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+    @Value("${app.cors.allowed-origin}")
+    private String allowedOrigins;
 
-				// No session (stateless)
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-				// Authorization rules
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**" ,"/addUser", "/v2/api-docs",
-		                "/v3/api-docs/**",
-		                "/swagger-resources/**",
-		                "/swagger-ui/**",
-		                "/swagger-ui.html",
-		                "/webjars/**").permitAll() // login, register
-						.anyRequest().authenticated() // secure all other APIs
-				)
+        http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))   // <-- IMPORTANT
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/auth/**",
+                                "/addUser",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**",
+                                "/h2-console/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form.disable())
+                .httpBasic(httpBasic -> httpBasic.disable());
 
-				// Disable form login and default login page
-				.formLogin(form -> form.disable()).httpBasic(httpBasic -> httpBasic.disable());
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-		// Add JWT filter BEFORE UsernamePasswordAuthenticationFilter
-		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-		
-		
-		/*
-		 http
-	        // Disable CSRF for H2 console
-	        .csrf(csrf -> csrf.disable())
+        return http.build();
+    }
 
-	        // Allow H2 console frames
-	        .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        String[] origins = allowedOrigins.split(",");
 
-	        // No sessions → JWT stateless
-	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        for (String origin : origins) {
+            config.addAllowedOrigin(origin.trim());
+        }
 
-	        // Authorization rules
-	        .authorizeHttpRequests(auth -> auth
-	                .requestMatchers(
-	                        "/auth/**",
-	                        "/h2-console/**"
-	                        ,"/addUser"
-	                ).permitAll()
-	                .anyRequest().authenticated()
-	        )
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.setAllowCredentials(true);
 
-	        // Disable form login + basic auth
-	        .formLogin(form -> form.disable())
-	        .httpBasic(httpBasic -> httpBasic.disable());
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
 
-	    // Add JWT filter BEFORE UsernamePasswordAuthenticationFilter
-	    http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-*/
-		return http.build();
-		
-	}
-	
-	
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-	    return new WebMvcConfigurer() {
-	        @Override
-	        public void addCorsMappings(CorsRegistry registry) {
-	        	
-	        	 String[] origins = allowedOrigins.split(",");
+        return source;
+    }
 
-	        	 
-	            registry.addMapping("/**")
-	                    .allowedOrigins(origins)
-	                    .allowedMethods("GET","POST","PUT","DELETE")
-	                    .allowedHeaders("*")
-	                    .allowCredentials(false);
-	        }
-	    };
-	}
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-		return config.getAuthenticationManager();
-	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
+

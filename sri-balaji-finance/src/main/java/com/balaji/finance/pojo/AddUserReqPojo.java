@@ -10,6 +10,14 @@ public class AddUserReqPojo {
 		return name;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
