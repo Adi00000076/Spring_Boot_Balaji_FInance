@@ -95,12 +95,12 @@ public class PersonalInfoService {
 		personalInfo.setShares(personalInfoDto.getShares());
 		personalInfo.setLoanlimit(personalInfoDto.getLoanlimit());
 
-		personalInfo.setBussinessexemption(personalInfoDto.getBussinessexemption());
+		personalInfo.setBussinessexemption(personalInfoDto.isBussinessexemption());
 		personalInfo.setIntroname(personalInfoDto.getIntroname());
 
 		personalInfo.setOldid(personalInfoDto.getOldid());
 		personalInfo.setCategory(personalInfoDto.getCategory());
-		personalInfo.setDisable(personalInfoDto.getDisable());
+		personalInfo.setDisable(personalInfoDto.isDisable());
 		
 		
 		personalInfoRepository.save(personalInfo);
@@ -143,12 +143,12 @@ public class PersonalInfoService {
 			personalInfo.setShares(personalInfoDto.getShares());
 			personalInfo.setLoanlimit(personalInfoDto.getLoanlimit());
 
-			personalInfo.setBussinessexemption(personalInfoDto.getBussinessexemption());
+			personalInfo.setBussinessexemption(personalInfoDto.isBussinessexemption());
 			personalInfo.setIntroname(personalInfoDto.getIntroname());
 
 			personalInfo.setOldid(personalInfoDto.getOldid());
 			personalInfo.setCategory(personalInfoDto.getCategory());
-			personalInfo.setDisable(personalInfoDto.getDisable());
+			personalInfo.setDisable(personalInfoDto.isDisable());
 			
 			
 			
@@ -225,12 +225,12 @@ public class PersonalInfoService {
 			personalInfoDto.setShares(p.getShares());
 			personalInfoDto.setLoanlimit(p.getLoanlimit());
 
-			personalInfoDto.setBussinessexemption(p.getBussinessexemption());
+			personalInfoDto.setBussinessexemption(p.isBussinessexemption());
 			personalInfoDto.setIntroname(p.getIntroname());
 
 			personalInfoDto.setOldid(p.getOldid());
 			personalInfoDto.setCategory(p.getCategory());
-			personalInfoDto.setDisable(p.getDisable());
+			personalInfoDto.setDisable(p.isDisable());
 			
 			
 			toBeReturnedDtoList.add(personalInfoDto);
@@ -282,12 +282,12 @@ public class PersonalInfoService {
 			personalInfoDto.setShares(personalInfoDbObject.getShares());
 			personalInfoDto.setLoanlimit(personalInfoDbObject.getLoanlimit());
 
-			personalInfoDto.setBussinessexemption(personalInfoDbObject.getBussinessexemption());
+			personalInfoDto.setBussinessexemption(personalInfoDbObject.isBussinessexemption());
 			personalInfoDto.setIntroname(personalInfoDbObject.getIntroname());
 
 			personalInfoDto.setOldid(personalInfoDbObject.getOldid());
 			personalInfoDto.setCategory(personalInfoDbObject.getCategory());
-			personalInfoDto.setDisable(personalInfoDbObject.getDisable());
+			personalInfoDto.setDisable(personalInfoDbObject.isDisable());
 
 			return personalInfoDto;
 		

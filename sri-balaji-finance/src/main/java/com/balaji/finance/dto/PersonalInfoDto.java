@@ -19,7 +19,7 @@ public class PersonalInfoDto {
 	private String reference;
 	private String idproof;
 
-	private Boolean disable;
+	private boolean disable;
 
 	private Double shares;
 	private Double loanlimit;
@@ -32,7 +32,7 @@ public class PersonalInfoDto {
 	private String occupation;
 	private String spouse;
 
-	private Boolean bussinessexemption;
+	private boolean bussinessexemption;
 	private String introname;
 
 	// ---------- GETTERS & SETTERS ----------
@@ -125,12 +125,20 @@ public class PersonalInfoDto {
 		this.idproof = idproof;
 	}
 
-	public Boolean getDisable() {
+	public boolean isDisable() {
 		return disable;
 	}
 
-	public void setDisable(Boolean disable) {
+	public void setDisable(boolean disable) {
 		this.disable = disable;
+	}
+
+	public boolean isBussinessexemption() {
+		return bussinessexemption;
+	}
+
+	public void setBussinessexemption(boolean bussinessexemption) {
+		this.bussinessexemption = bussinessexemption;
 	}
 
 	public Double getShares() {
@@ -203,14 +211,6 @@ public class PersonalInfoDto {
 
 	public void setSpouse(String spouse) {
 		this.spouse = spouse;
-	}
-
-	public Boolean getBussinessexemption() {
-		return bussinessexemption;
-	}
-
-	public void setBussinessexemption(Boolean bussinessexemption) {
-		this.bussinessexemption = bussinessexemption;
 	}
 
 	public String getIntroname() {
