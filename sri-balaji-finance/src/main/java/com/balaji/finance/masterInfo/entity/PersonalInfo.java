@@ -2,6 +2,7 @@ package com.balaji.finance.masterInfo.entity;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -23,6 +24,7 @@ public class PersonalInfo {
 	private String category;
 	private String reference;
 
+	@Column(name = "IDPROOFTYPE")
 	private String idProoftype;
 	private String idproof;
 
@@ -124,6 +126,7 @@ public class PersonalInfo {
 		this.reference = reference;
 	}
 
+	
 	public String getIdproof() {
 		return idproof;
 	}
