@@ -18,7 +18,7 @@ public class PersonalInfoDto {
 	private String category;
 	private String reference;
 	private String idproof;
-	private String idProofType;
+	private String idprooftype;
 
 	private boolean disable;
 
@@ -222,12 +222,12 @@ public class PersonalInfoDto {
 		this.introname = introname;
 	}
 
-	public String getIdProofType() {
-		return idProofType;
+	public String getIdprooftype() {
+		return idprooftype;
 	}
 
-	public void setIdProofType(String idProofType) {
-		this.idProofType = idProofType;
+	public void setIdprooftype(String idprooftype) {
+		this.idprooftype = idprooftype;
 	}
 
 }
