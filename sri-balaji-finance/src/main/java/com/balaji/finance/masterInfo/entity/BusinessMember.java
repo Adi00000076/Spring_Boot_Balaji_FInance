@@ -80,7 +80,7 @@ public class BusinessMember {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "partnerId")
+	@JoinColumn(name = "partnerid")
 	public PersonalInfo getPartnerId() {
 		return partnerId;
 	}

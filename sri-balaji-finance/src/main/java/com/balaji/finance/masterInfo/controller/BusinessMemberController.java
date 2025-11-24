@@ -29,7 +29,7 @@ public class BusinessMemberController {
 
 		String response = null;
 
-		if (businessMemberDto.getId() == null) {
+		if (businessMemberDto.getId() == null || businessMemberDto.getId().isBlank()) {
 			response = businessMemberService.saveBusinessMember(businessMemberDto, loanType);
 		} else {
 			response = businessMemberService.updateBusinessMember(businessMemberDto);
