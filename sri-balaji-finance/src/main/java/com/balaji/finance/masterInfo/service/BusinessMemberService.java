@@ -66,29 +66,40 @@ public class BusinessMemberService {
 		BusinessMember businessMember = new BusinessMember();
 		businessMember.setId(generateId(type));
 
-		Optional<PersonalInfo> customerOptional = personalInfoRepository.findById(businessMemberDto.getCustomerId());
-		if (customerOptional.isPresent()) {
-			businessMember.setCustomerId(customerOptional.get());
+		if (businessMemberDto.getCustomerId() != null && !businessMemberDto.getCustomerId().isBlank()) {
+			Optional<PersonalInfo> customerOptional = personalInfoRepository
+					.findById(businessMemberDto.getCustomerId());
+			if (customerOptional.isPresent()) {
+				businessMember.setCustomerId(customerOptional.get());
+			}
 		}
 
-		Optional<PersonalInfo> gureantor1Optional = personalInfoRepository.findById(businessMemberDto.getGuarantor1());
-		if (gureantor1Optional.isPresent()) {
-			businessMember.setGuarantor1(gureantor1Optional.get());
+		if (businessMemberDto.getGuarantor1() != null && !businessMemberDto.getGuarantor1().isBlank()) {
+			Optional<PersonalInfo> gureantor1Optional = personalInfoRepository
+					.findById(businessMemberDto.getGuarantor1());
+			if (gureantor1Optional.isPresent()) {
+				businessMember.setGuarantor1(gureantor1Optional.get());
+			}
 		}
-
-		Optional<PersonalInfo> gureantor2Optional = personalInfoRepository.findById(businessMemberDto.getGuarantor2());
-		if (gureantor2Optional.isPresent()) {
-			businessMember.setGuarantor2(gureantor2Optional.get());
+		if (businessMemberDto.getGuarantor2() != null && !businessMemberDto.getGuarantor2().isBlank()) {
+			Optional<PersonalInfo> gureantor2Optional = personalInfoRepository
+					.findById(businessMemberDto.getGuarantor2());
+			if (gureantor2Optional.isPresent()) {
+				businessMember.setGuarantor2(gureantor2Optional.get());
+			}
 		}
-
-		Optional<PersonalInfo> gureantor3Optional = personalInfoRepository.findById(businessMemberDto.getGuarantor3());
-		if (gureantor3Optional.isPresent()) {
-			businessMember.setGuarantor3(gureantor3Optional.get());
+		if (businessMemberDto.getGuarantor3() != null && !businessMemberDto.getGuarantor3().isBlank()) {
+			Optional<PersonalInfo> gureantor3Optional = personalInfoRepository
+					.findById(businessMemberDto.getGuarantor3());
+			if (gureantor3Optional.isPresent()) {
+				businessMember.setGuarantor3(gureantor3Optional.get());
+			}
 		}
-
-		Optional<PersonalInfo> partnerOptional = personalInfoRepository.findById(businessMemberDto.getPartnerId());
-		if (partnerOptional.isPresent()) {
-			businessMember.setPartnerId(partnerOptional.get());
+		if (businessMemberDto.getPartnerId() != null && !businessMemberDto.getPartnerId().isBlank()) {
+			Optional<PersonalInfo> partnerOptional = personalInfoRepository.findById(businessMemberDto.getPartnerId());
+			if (partnerOptional.isPresent()) {
+				businessMember.setPartnerId(partnerOptional.get());
+			}
 		}
 
 		businessMember.setStartDate(businessMemberDto.getStartDate());
