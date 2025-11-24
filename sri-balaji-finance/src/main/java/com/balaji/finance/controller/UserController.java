@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.balaji.finance.dto.PersonalInfoDto;
-import com.balaji.finance.entity.Users;
+import com.balaji.finance.masterInfo.entity.Users;
+import com.balaji.finance.masterInfo.service.UsersService;
 import com.balaji.finance.pojo.AddUserReqPojo;
 import com.balaji.finance.pojo.ErrorResponse;
-import com.balaji.finance.service.UsersService;
 
 @RestController
 public class UserController {

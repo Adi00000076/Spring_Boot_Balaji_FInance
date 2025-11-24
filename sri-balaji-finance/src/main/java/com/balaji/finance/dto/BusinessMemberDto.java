@@ -1,21 +1,27 @@
-package com.balaji.finance.entity;
+package com.balaji.finance.dto;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-@Entity
-@Table(name = "businessmembers")
-public class BusinessMember {
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Service
+public class BusinessMemberDto {
 
 	private String id;
-	private PersonalInfo customerId;
-	private PersonalInfo guarantor1;
-	private PersonalInfo guarantor2;
-	private PersonalInfo guarantor3;
-	private PersonalInfo partnerId;
+	private String customerId;
+	private String guarantor1;
+	private String guarantor2;
+	private String guarantor3;
+	private String partnerId;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime startDate;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime endDate;
+
 	private Double amount;
 	private Double duration;
 	private Double interest;
@@ -29,8 +35,6 @@ public class BusinessMember {
 	private boolean chequeReminder;
 	private String businessId;
 
-	@Id
-	@Column(name = "ID", length = 255, nullable = false)
 	public String getId() {
 		return id;
 	}
@@ -39,57 +43,46 @@ public class BusinessMember {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CUSTOMERID")
-	public PersonalInfo getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(PersonalInfo customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "guarantor1")
-	public PersonalInfo getGuarantor1() {
+	public String getGuarantor1() {
 		return guarantor1;
 	}
 
-	public void setGuarantor1(PersonalInfo guarantor1) {
+	public void setGuarantor1(String guarantor1) {
 		this.guarantor1 = guarantor1;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "guarantor2")
-	public PersonalInfo getGuarantor2() {
+	public String getGuarantor2() {
 		return guarantor2;
 	}
 
-	public void setGuarantor2(PersonalInfo guarantor2) {
+	public void setGuarantor2(String guarantor2) {
 		this.guarantor2 = guarantor2;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "guarantor3")
-	public PersonalInfo getGuarantor3() {
+	public String getGuarantor3() {
 		return guarantor3;
 	}
 
-	public void setGuarantor3(PersonalInfo guarantor3) {
+	public void setGuarantor3(String guarantor3) {
 		this.guarantor3 = guarantor3;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "partnerId")
-	public PersonalInfo getPartnerId() {
+	public String getPartnerId() {
 		return partnerId;
 	}
 
-	public void setPartnerId(PersonalInfo partnerId) {
+	public void setPartnerId(String partnerId) {
 		this.partnerId = partnerId;
 	}
 
-	@Column(name = "STARTDATE")
 	public LocalDateTime getStartDate() {
 		return startDate;
 	}
@@ -98,7 +91,6 @@ public class BusinessMember {
 		this.startDate = startDate;
 	}
 
-	@Column(name = "ENDDATE")
 	public LocalDateTime getEndDate() {
 		return endDate;
 	}
@@ -107,7 +99,6 @@ public class BusinessMember {
 		this.endDate = endDate;
 	}
 
-	@Column(name = "AMOUNT")
 	public Double getAmount() {
 		return amount;
 	}
@@ -116,7 +107,6 @@ public class BusinessMember {
 		this.amount = amount;
 	}
 
-	@Column(name = "DURATION")
 	public Double getDuration() {
 		return duration;
 	}
@@ -125,7 +115,6 @@ public class BusinessMember {
 		this.duration = duration;
 	}
 
-	@Column(name = "INTEREST")
 	public Double getInterest() {
 		return interest;
 	}
@@ -134,7 +123,6 @@ public class BusinessMember {
 		this.interest = interest;
 	}
 
-	@Column(name = "INSTALLMENT")
 	public Double getInstallment() {
 		return installment;
 	}
@@ -143,7 +131,6 @@ public class BusinessMember {
 		this.installment = installment;
 	}
 
-	@Column(name = "SECURITY", length = 255)
 	public String getSecurity() {
 		return security;
 	}
@@ -152,7 +139,6 @@ public class BusinessMember {
 		this.security = security;
 	}
 
-	@Column(name = "STATUS")
 	public boolean isStatus() {
 		return status;
 	}
@@ -161,7 +147,6 @@ public class BusinessMember {
 		this.status = status;
 	}
 
-	@Column(name = "PAIDINSTALLMENTS")
 	public Integer getPaidInstallments() {
 		return paidInstallments;
 	}
@@ -170,7 +155,6 @@ public class BusinessMember {
 		this.paidInstallments = paidInstallments;
 	}
 
-	@Column(name = "PARTPRINCIPAL")
 	public Integer getPartPrincipal() {
 		return partPrincipal;
 	}
@@ -179,7 +163,6 @@ public class BusinessMember {
 		this.partPrincipal = partPrincipal;
 	}
 
-	@Column(name = "PARTINTEREST")
 	public Integer getPartInterest() {
 		return partInterest;
 	}
@@ -188,7 +171,6 @@ public class BusinessMember {
 		this.partInterest = partInterest;
 	}
 
-	@Column(name = "UNPAIDLATEFEE")
 	public Integer getUnpaidLateFee() {
 		return unpaidLateFee;
 	}
@@ -197,7 +179,6 @@ public class BusinessMember {
 		this.unpaidLateFee = unpaidLateFee;
 	}
 
-	@Column(name = "CHEQUEREMINDER")
 	public boolean isChequeReminder() {
 		return chequeReminder;
 	}
@@ -206,35 +187,12 @@ public class BusinessMember {
 		this.chequeReminder = chequeReminder;
 	}
 
-	@Column(name = "BUSINESSID", length = 255)
 	public String getBusinessId() {
 		return businessId;
 	}
 
 	public void setBusinessId(String businessId) {
 		this.businessId = businessId;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BusinessMember other = (BusinessMember) obj;
-		return Objects.equals(id, other.id);
-	}
-
-	@Override
-	public String toString() {
-		return "BusinessMember [id=" + id + "]";
 	}
 
 }

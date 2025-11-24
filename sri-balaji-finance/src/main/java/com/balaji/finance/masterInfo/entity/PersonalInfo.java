@@ -1,4 +1,4 @@
-package com.balaji.finance.entity;
+package com.balaji.finance.masterInfo.entity;
 
 import java.util.Objects;
 

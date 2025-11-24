@@ -1,4 +1,4 @@
-package com.balaji.finance.service;
+package com.balaji.finance.masterInfo.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.balaji.finance.entity.PersonalInfo;
-import com.balaji.finance.entity.Users;
+import com.balaji.finance.masterInfo.entity.PersonalInfo;
+import com.balaji.finance.masterInfo.entity.Users;
+import com.balaji.finance.masterInfo.repo.UserRepo;
 import com.balaji.finance.pojo.AddUserReqPojo;
-import com.balaji.finance.repo.UserRepo;
 
 @Service
 public class UsersService {

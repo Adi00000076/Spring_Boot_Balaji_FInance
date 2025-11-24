@@ -1,15 +1,17 @@
-package com.balaji.finance.service;
+package com.balaji.finance.masterInfo.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.balaji.finance.dto.PersonalInfoAutoCompletePojo;
 import com.balaji.finance.dto.PersonalInfoDto;
-import com.balaji.finance.entity.PersonalInfo;
-import com.balaji.finance.repo.PersonalInfoRepository;
+import com.balaji.finance.masterInfo.entity.PersonalInfo;
+import com.balaji.finance.masterInfo.repo.PersonalInfoRepository;
 import com.balaji.finance.util.PersonalSequenceService;
 
 @Service
@@ -301,5 +303,28 @@ public class PersonalInfoService {
 
 		}
 
+	}
+
+	public List<PersonalInfoAutoCompletePojo> autocomplete(String keyword) {
+
+		List<PersonalInfo> allPersonalInfoList = personalInfoRepository.personalInfoAutoComplete(false, keyword,
+				Arrays.asList("CUSTOMER", "PARTNER"));
+
+		List<PersonalInfoAutoCompletePojo> toBeReturnedDtoList = new ArrayList<PersonalInfoAutoCompletePojo>();
+
+		allPersonalInfoList.stream().forEach(p -> {
+
+			PersonalInfoAutoCompletePojo personalInfoAutoCompletePojo = new PersonalInfoAutoCompletePojo();
+			personalInfoAutoCompletePojo.setId(p.getId());
+
+			personalInfoAutoCompletePojo.setFirstname(p.getFirstname());
+			personalInfoAutoCompletePojo.setLastname(p.getLastname());
+			personalInfoAutoCompletePojo.setGender(p.getGender());
+
+			toBeReturnedDtoList.add(personalInfoAutoCompletePojo);
+
+		});
+
+		return toBeReturnedDtoList;
 	}
 }

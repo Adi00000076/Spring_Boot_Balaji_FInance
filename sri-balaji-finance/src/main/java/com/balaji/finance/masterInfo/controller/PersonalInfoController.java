@@ -1,4 +1,4 @@
-package com.balaji.finance.controller;
+package com.balaji.finance.masterInfo.controller;
 
 import java.util.List;
 
@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.balaji.finance.dto.PersonalInfoAutoCompletePojo;
 import com.balaji.finance.dto.PersonalInfoDto;
-import com.balaji.finance.service.PersonalInfoService;
+import com.balaji.finance.masterInfo.service.PersonalInfoService;
 
 @RestController
 @RequestMapping("/PersonalInfo")
@@ -35,7 +37,13 @@ public class PersonalInfoController {
 	public ResponseEntity<String> updatePersonalInfoTemplate(@RequestBody PersonalInfoDto personalInfoDto,
 			@PathVariable("personType") String personType) {
 
-		String response = personalInfoService.updatePersonalInfoDto(personalInfoDto);
+		String response = null;
+
+		if (personalInfoDto.getId() == null) {
+			response = personalInfoService.savePersonalInfoDto(personalInfoDto, personType);
+		} else {
+			response = personalInfoService.updatePersonalInfoDto(personalInfoDto);
+		}
 
 		return ResponseEntity.ok().body(response);
 	}
@@ -62,6 +70,15 @@ public class PersonalInfoController {
 		List<PersonalInfoDto> all = personalInfoService.findAll();
 
 		return ResponseEntity.ok().body(all);
+	}
+
+	@GetMapping("/autocomplete")
+	public ResponseEntity<List<PersonalInfoAutoCompletePojo>> autocomplete(@RequestParam String q) {
+
+		List<PersonalInfoAutoCompletePojo> all = personalInfoService.autocomplete(q);
+
+		return ResponseEntity.ok().body(all);
+
 	}
 
 }

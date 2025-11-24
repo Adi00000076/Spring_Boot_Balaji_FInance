@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.balaji.finance.entity.Users;
-import com.balaji.finance.repo.UserRepo;
+import com.balaji.finance.masterInfo.entity.Users;
+import com.balaji.finance.masterInfo.repo.UserRepo;
 
 @Service
 public class MyOwnUserDetails implements UserDetailsService {
