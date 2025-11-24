@@ -91,6 +91,7 @@ public class PersonalInfoService {
 		
 		personalInfo.setReference(personalInfoDto.getReference());
 		personalInfo.setIdproof(personalInfoDto.getIdproof());
+		personalInfo.setIdProofType(personalInfoDto.getIdProofType());
 		
 		personalInfo.setShares(personalInfoDto.getShares());
 		personalInfo.setLoanlimit(personalInfoDto.getLoanlimit());
@@ -139,6 +140,7 @@ public class PersonalInfoService {
 			
 			personalInfo.setReference(personalInfoDto.getReference());
 			personalInfo.setIdproof(personalInfoDto.getIdproof());
+			personalInfo.setIdProofType(personalInfoDto.getIdProofType());
 			
 			personalInfo.setShares(personalInfoDto.getShares());
 			personalInfo.setLoanlimit(personalInfoDto.getLoanlimit());
@@ -221,6 +223,7 @@ public class PersonalInfoService {
 			
 			personalInfoDto.setReference(p.getReference());
 			personalInfoDto.setIdproof(p.getIdproof());
+			personalInfoDto.setIdProofType(p.getIdProofType());
 			
 			personalInfoDto.setShares(p.getShares());
 			personalInfoDto.setLoanlimit(p.getLoanlimit());
@@ -278,6 +281,7 @@ public class PersonalInfoService {
 			
 			personalInfoDto.setReference(personalInfoDbObject.getReference());
 			personalInfoDto.setIdproof(personalInfoDbObject.getIdproof());
+			personalInfoDto.setIdProofType(personalInfoDbObject.getIdProofType());
 			
 			personalInfoDto.setShares(personalInfoDbObject.getShares());
 			personalInfoDto.setLoanlimit(personalInfoDbObject.getLoanlimit());

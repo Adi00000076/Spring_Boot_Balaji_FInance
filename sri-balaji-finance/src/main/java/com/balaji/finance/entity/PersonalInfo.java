@@ -22,6 +22,8 @@ public class PersonalInfo {
 	private String phone;
 	private String category;
 	private String reference;
+	
+	private String idProofType;
 	private String idproof;
 
 	private boolean disable;
@@ -39,6 +41,8 @@ public class PersonalInfo {
 
 	private boolean bussinessexemption;
 	private String introname;
+	
+	
 
 	// ---------- GETTERS & SETTERS ----------
 
@@ -220,6 +224,16 @@ public class PersonalInfo {
 
 	public String getIntroname() {
 		return introname;
+	}
+
+	
+	
+	public String getIdProofType() {
+		return idProofType;
+	}
+
+	public void setIdProofType(String idProofType) {
+		this.idProofType = idProofType;
 	}
 
 	@Override
