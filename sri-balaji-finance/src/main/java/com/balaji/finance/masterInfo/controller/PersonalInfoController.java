@@ -75,7 +75,7 @@ public class PersonalInfoController {
 	@GetMapping("/autocomplete")
 	public ResponseEntity<List<PersonalInfoAutoCompletePojo>> autocomplete(@RequestParam String q) {
 
-		List<PersonalInfoAutoCompletePojo> all = personalInfoService.autocomplete(q);
+		List<PersonalInfoAutoCompletePojo> all = personalInfoService.autocomplete( "%" + q + "%");
 
 		return ResponseEntity.ok().body(all);
 
