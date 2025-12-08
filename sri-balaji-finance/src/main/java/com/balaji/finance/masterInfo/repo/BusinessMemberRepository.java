@@ -15,7 +15,7 @@ public interface BusinessMemberRepository extends JpaRepository<BusinessMember, 
 		  +" FROM BusinessMember u "
 		  +" WHERE  "
 		  + "      u.id Like :loanType "
-		  + " and (u.id like :keyword or u.PersonalInfo.firstname like :keyword or u.PersonalInfo.lastname like :keyword)")
+		  + " and (u.id like :keyword or u.customerId.firstname like :keyword or u.customerId.lastname like :keyword)")
 	public List<BusinessMember> businessMemberAutoComplete(@Param("LoanType") String loanType,
 			@Param("keyWord") String keyWord);
 
