@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.balaji.finance.dto.BusinessMemberDto;
-import com.balaji.finance.dto.PersonalInfoDto;
 import com.balaji.finance.masterInfo.service.BusinessMemberService;
+import com.balaji.finance.pojo.BusinessMemberAutoCompletePojo;
 
 @RestController
 @RequestMapping("/BusinessMember")
@@ -61,9 +62,15 @@ public class BusinessMemberController {
 
 		return ResponseEntity.ok().body(all);
 	}
-	
-	
-	
-	
+
+	@GetMapping("/loanDetailsAutoComplete/{loanType}")
+	public ResponseEntity<List<BusinessMemberAutoCompletePojo>> loanDetailsAutoComplete(@RequestParam String q,
+			@PathVariable("loanType") String loanType) {
+
+		List<BusinessMemberAutoCompletePojo> all = businessMemberService.businessMemberAutoComplete(q, loanType);
+
+		return ResponseEntity.ok().body(all);
+
+	}
 
 }

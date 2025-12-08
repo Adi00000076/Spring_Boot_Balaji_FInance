@@ -39,7 +39,7 @@ public class PersonalInfoController {
 
 		String response = null;
 
-		if (personalInfoDto.getId() == null) {
+		if (personalInfoDto.getId() == null || personalInfoDto.getId().isBlank()) {
 			response = personalInfoService.savePersonalInfoDto(personalInfoDto, personType);
 		} else {
 			response = personalInfoService.updatePersonalInfoDto(personalInfoDto);

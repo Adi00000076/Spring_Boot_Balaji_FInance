@@ -10,12 +10,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.balaji.finance.dto.BusinessMemberDto;
-import com.balaji.finance.dto.PersonalInfoDto;
-import com.balaji.finance.masterInfo.controller.BusinessMemberController;
 import com.balaji.finance.masterInfo.entity.BusinessMember;
 import com.balaji.finance.masterInfo.entity.PersonalInfo;
 import com.balaji.finance.masterInfo.repo.BusinessMemberRepository;
 import com.balaji.finance.masterInfo.repo.PersonalInfoRepository;
+import com.balaji.finance.pojo.BusinessMemberAutoCompletePojo;
 import com.balaji.finance.util.BusinessMemersSequenceService;
 
 @Service
@@ -306,4 +305,38 @@ public class BusinessMemberService {
 		}
 
 	}
+
+	public List<BusinessMemberAutoCompletePojo> businessMemberAutoComplete(String keyWord, String loanType) {
+
+		String starWithString = null;
+		switch (loanType) {
+		case "DAILY_FINANCE":
+			starWithString = "DF";
+			break;
+
+		case "MONTHLY_FINANCE":
+			starWithString = "MF";
+			break;
+
+		default:
+
+			break;
+		}
+
+		List<BusinessMember> loanList = businessMemberRepository.businessMemberAutoComplete(starWithString, keyWord);
+
+		List<BusinessMemberAutoCompletePojo> pojoList = new ArrayList<BusinessMemberAutoCompletePojo>();
+
+		for (BusinessMember bm : loanList) {
+
+			BusinessMemberAutoCompletePojo pojo = new BusinessMemberAutoCompletePojo();
+			pojo.setLoanId(bm.getId());
+			pojo.setCustomerId(bm.getCustomerId().getId());
+			pojo.setCustomerName(bm.getCustomerId().getFirstname());
+			pojoList.add(pojo);
+		}
+
+		return pojoList;
+	}
+
 }
