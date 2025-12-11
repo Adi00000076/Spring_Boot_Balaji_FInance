@@ -6,7 +6,7 @@ public class BusinessMemberAutoCompletePojo {
 	private String customerName;
 	private String customerId;
 
-	private String displayString = loanId + "-" + customerName + "-" + customerId;
+	private String displayString;
 
 	public String getLoanId() {
 		return loanId;
@@ -33,6 +33,7 @@ public class BusinessMemberAutoCompletePojo {
 	}
 
 	public String getDisplayString() {
+		displayString = loanId + "-" + customerName + "-" + customerId;
 		return displayString;
 	}
 

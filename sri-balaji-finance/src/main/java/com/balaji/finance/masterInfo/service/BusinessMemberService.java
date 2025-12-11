@@ -323,16 +323,17 @@ public class BusinessMemberService {
 			break;
 		}
 
-		List<BusinessMember> loanList = businessMemberRepository.businessMemberAutoComplete(starWithString, keyWord);
+		List<BusinessMember> loanList = businessMemberRepository.businessMemberAutoComplete(keyWord);
 
 		List<BusinessMemberAutoCompletePojo> pojoList = new ArrayList<BusinessMemberAutoCompletePojo>();
-
+		System.err.println(loanList);
 		for (BusinessMember bm : loanList) {
 
 			BusinessMemberAutoCompletePojo pojo = new BusinessMemberAutoCompletePojo();
 			pojo.setLoanId(bm.getId());
 			pojo.setCustomerId(bm.getCustomerId().getId());
 			pojo.setCustomerName(bm.getCustomerId().getFirstname());
+
 			pojoList.add(pojo);
 		}
 

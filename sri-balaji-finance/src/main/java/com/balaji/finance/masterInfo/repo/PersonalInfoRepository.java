@@ -15,5 +15,5 @@ public interface PersonalInfoRepository extends JpaRepository<PersonalInfo, Stri
 
 	@Query("SELECT u FROM PersonalInfo u WHERE u.disable =:status and (u.id like :keyword or u.firstname like :keyword or u.lastname like :keyword) and category IN (:categoryList)")
 	public List<PersonalInfo> personalInfoAutoComplete(@Param("status") boolean status,
-			@Param("keyWord") String keyWord, @Param("categoryList") List<String> categoryList);
+			@Param("keyword") String keyWord, @Param("categoryList") List<String> categoryList);
 }

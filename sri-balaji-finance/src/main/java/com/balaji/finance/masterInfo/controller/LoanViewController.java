@@ -18,7 +18,7 @@ public class LoanViewController {
 	private LoanInstallmentPaymentService loanInstallmentPaymentService;
 
 	@GetMapping("/loadMFLoanInformation/{loanId}")
-	public ResponseEntity<LoanInformation> loadMFLoanInformation(@PathVariable("id") String loanId) {
+	public ResponseEntity<LoanInformation> loadMFLoanInformation(@PathVariable("loanId") String loanId) {
 		LoanInformation mfLoanPaidInfo = loanInstallmentPaymentService.loadMFLoanPaidInfo(loanId);
 
 		return ResponseEntity.ok().body(mfLoanPaidInfo);

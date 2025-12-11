@@ -10,14 +10,12 @@ import com.balaji.finance.masterInfo.entity.BusinessMember;
 
 public interface BusinessMemberRepository extends JpaRepository<BusinessMember, String> {
 	
-	@Query("SELECT "
-		  +"  u "
-		  +" FROM BusinessMember u "
-		  +" WHERE  "
-		  + "      u.id Like :loanType "
-		  + " and (u.id like :keyword or u.customerId.firstname like :keyword or u.customerId.lastname like :keyword)")
-	public List<BusinessMember> businessMemberAutoComplete(@Param("LoanType") String loanType,
-			@Param("keyWord") String keyWord);
+	@Query("SELECT u FROM BusinessMember u " +
+		       "WHERE LOWER(u.id) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+		       "OR LOWER(u.customerId.firstname) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+		       "OR LOWER(u.customerId.lastname) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+	List<BusinessMember> businessMemberAutoComplete(@Param("keyword") String keyword);
+
 
 }
 
