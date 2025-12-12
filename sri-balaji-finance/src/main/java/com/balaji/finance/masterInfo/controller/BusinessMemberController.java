@@ -55,10 +55,10 @@ public class BusinessMemberController {
 		return ResponseEntity.ok().body(businessMemberDto);
 	}
 
-	@GetMapping("/findAll")
-	public ResponseEntity<List<BusinessMemberDto>> findAll() {
+	@GetMapping("/findAll/{loanType}")
+	public ResponseEntity<List<BusinessMemberDto>> findAll(@PathVariable("loanType") String loanType) {
 
-		List<BusinessMemberDto> all = businessMemberService.findAll();
+		List<BusinessMemberDto> all = businessMemberService.findAll(loanType);
 
 		return ResponseEntity.ok().body(all);
 	}

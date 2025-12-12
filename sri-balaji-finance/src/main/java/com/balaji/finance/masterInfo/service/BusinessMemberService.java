@@ -226,9 +226,25 @@ public class BusinessMemberService {
 	}
 
 	// findAll
-	public List<BusinessMemberDto> findAll() {
+	public List<BusinessMemberDto> findAll(String type) {
 
-		List<BusinessMember> allBusinessMemberList = businessMemberRepository.findAll();
+		String prefix;
+		switch (type) {
+		case "DAILY_FINANCE":
+			prefix = "DF";
+			break;
+
+		case "MONTHLY_FINANCE":
+			prefix = "MF";
+			break;
+
+		default:
+			throw new IllegalArgumentException("Unknown type: " + type);
+		}
+
+		
+		
+		List<BusinessMember> allBusinessMemberList = businessMemberRepository.businessMemberList("%"+prefix+"%");
 
 		List<BusinessMemberDto> toBeReturnedDtoList = new ArrayList<BusinessMemberDto>();
 

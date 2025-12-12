@@ -28,7 +28,7 @@ public class LoanInstallmentPaymentService {
 	@Autowired
 	private CashBookRepo cashBookRepo;
 
-	public LoanInformation generateLoanInformation(String id) {
+	public LoanInformation loadMFLoanPaidInfo(String id) {
 	    // 1. Find the BusinessMember safely
 	    Optional<BusinessMember> opt = businessMemberRepository.findById(id);
 	    if (!opt.isPresent()) {
@@ -76,7 +76,13 @@ public class LoanInstallmentPaymentService {
 
 	    // Loan calculations
 	    double totalLoan = bm.getAmount() + (bm.getInterest() != null ? bm.getInterest() : 0.0);
-	    double installmentAmount = totalLoan / bm.getInstallment(); // assume installment > 0
+	    double installmentAmount = 0;
+		try {
+			installmentAmount = totalLoan / bm.getInstallment();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	    info.setLoanAmount(bm.getAmount());
 	    info.setInstallmentAmount(installmentAmount);

@@ -10,14 +10,14 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "CashBook")
+@Table(name = "cashbook")
 public class CashBook {
 
 	@Id
 	@Column(name = "ID")
 	private Double id;
 
-	@Column(name = "LineNo")
+	@Column(name = "LINENO")
 	private Double lineNo;
 
 	@Temporal(TemporalType.TIMESTAMP)

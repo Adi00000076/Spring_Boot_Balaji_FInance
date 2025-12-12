@@ -17,5 +17,10 @@ public interface BusinessMemberRepository extends JpaRepository<BusinessMember, 
 	List<BusinessMember> businessMemberAutoComplete(@Param("keyword") String keyword);
 
 
+	
+	
+	@Query("SELECT u FROM BusinessMember u WHERE u.id like :keyword")
+	List<BusinessMember> businessMemberList(@Param("keyword") String keyword);
+
 }
 
